@@ -1,6 +1,6 @@
 name: 'Is Organization Member'
 description: 'Checks if someone is a member of an organization.'
-author: 'JamesSingleton'
+author: 'Travis Raines'
 inputs:
   organization:
     description: 'The organization name.'

@@ -8,9 +8,8 @@ const github = require("@actions/github");
 
 const organization = core.getInput("organization", { required: true });
 const username = core.getInput("username", { required: true });
-const token = core.getInput("token", { required: true });
 
-const octokit = new github.getOctokit(token);
+const octokit = new github.getOctokit();
 
 main();
 

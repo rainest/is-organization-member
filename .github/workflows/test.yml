@@ -13,23 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        id: is_organization_member_zendesk
+        id: is_organization_member_kong
         with:
-          organization: zendesk
-          username: JamesSingleton
-          token: ${{ secrets.GITHUB_TOKEN }}
+          organization: Kong
+          username: rainest
       - name: Log Result
         run: |
-          result=${{steps.is_organization_member_zendesk.outputs.result}}
-          echo "$result"
-      - uses: actions/checkout@v2
-      - uses: ./
-        id: is_organization_member_amex
-        with:
-          organization: americanexpress
-          username: JamesSingleton
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Log Result
-        run: |
-          result=${{steps.is_organization_member_amex.outputs.result}}
+          result=${{steps.is_organization_member_kong.outputs.result}}
           echo "$result"

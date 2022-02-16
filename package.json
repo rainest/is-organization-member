@@ -21,9 +21,9 @@
   "author": "GitHub",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JamesSingleton/is-organization-member/issues"
+    "url": "https://github.com/rainest/is-organization-member/issues"
   },
-  "homepage": "https://github.com/JamesSingleton/is-organization-member#readme",
+  "homepage": "https://github.com/rainest/is-organization-member#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0"
