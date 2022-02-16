@@ -163,9 +163,8 @@ const github = __webpack_require__(469);
 
 const organization = core.getInput("organization", { required: true });
 const username = core.getInput("username", { required: true });
-const token = core.getInput("token", { required: true });
 
-const octokit = new github.getOctokit(token);
+const octokit = new github.getOctokit();
 
 main();
 
@@ -389,16 +388,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getApiBaseUrl = exports.getProxyAgent = exports.getAuthString = void 0;
 const httpClient = __importStar(__webpack_require__(539));
-function getAuthString(token, options) {
-    if (!token && !options.auth) {
-        throw new Error('Parameter token or opts.auth is required');
-    }
-    else if (token && options.auth) {
-        throw new Error('Parameters token and opts.auth may not both be specified');
-    }
-    return typeof options.auth === 'string' ? options.auth : `token ${token}`;
-}
-exports.getAuthString = getAuthString;
 function getProxyAgent(destinationUrl) {
     const hc = new httpClient.HttpClient();
     return hc.getAgent(destinationUrl);
@@ -926,44 +915,6 @@ class BasicCredentialHandler {
         return null;
     }
 }
-exports.BasicCredentialHandler = BasicCredentialHandler;
-class BearerCredentialHandler {
-    constructor(token) {
-        this.token = token;
-    }
-    // currently implements pre-authorization
-    // TODO: support preAuth = false where it hooks on 401
-    prepareRequest(options) {
-        options.headers['Authorization'] = 'Bearer ' + this.token;
-    }
-    // This handler cannot handle 401
-    canHandleAuthentication(response) {
-        return false;
-    }
-    handleAuthentication(httpClient, requestInfo, objs) {
-        return null;
-    }
-}
-exports.BearerCredentialHandler = BearerCredentialHandler;
-class PersonalAccessTokenCredentialHandler {
-    constructor(token) {
-        this.token = token;
-    }
-    // currently implements pre-authorization
-    // TODO: support preAuth = false where it hooks on 401
-    prepareRequest(options) {
-        options.headers['Authorization'] =
-            'Basic ' + Buffer.from('PAT:' + this.token).toString('base64');
-    }
-    // This handler cannot handle 401
-    canHandleAuthentication(response) {
-        return false;
-    }
-    handleAuthentication(httpClient, requestInfo, objs) {
-        return null;
-    }
-}
-exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHandler;
 
 
 /***/ }),
@@ -4425,10 +4376,6 @@ exports.GitHub = core_1.Octokit.plugin(plugin_rest_endpoint_methods_1.restEndpoi
 function getOctokitOptions(token, options) {
     const opts = Object.assign({}, options || {}); // Shallow clone - don't mutate the object provided by the caller
     // Auth
-    const auth = Utils.getAuthString(token, opts);
-    if (auth) {
-        opts.auth = auth;
-    }
     return opts;
 }
 exports.getOctokitOptions = getOctokitOptions;
