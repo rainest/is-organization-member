@@ -1,4 +1,5 @@
 console.log("STARTED");
+console.log("STARTED");
 
 const cp = require("child_process");
 cp.execSync(`cd ${__dirname}; npm ci`);
@@ -17,7 +18,7 @@ async function main() {
   const { data: orgs } = checkStatus(
     await octokit.rest.orgs.listForUser({ username, per_page: 100 })
   );
-
+  console.log(octokit.rest.orgs.listForUser({ username, per_page: 100 }))
   const isMember = orgs.some(({ login }) => login === organization);
 
   core.setOutput("result", isMember ? "true" : "false");
